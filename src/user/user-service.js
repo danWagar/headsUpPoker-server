@@ -3,7 +3,7 @@ const xss = require('xss');
 const bcrypt = require('bcryptjs');
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[0-9])[\S]+/;
 
-const UsersService = {
+const userService = {
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
@@ -36,7 +36,6 @@ const UsersService = {
       .then(user => !!user);
   },
   insertUser(db, newUser) {
-    console.log('adding new user ', newUser);
     return db
       .insert(newUser)
       .into('users')
@@ -46,4 +45,4 @@ const UsersService = {
   }
 };
 
-module.exports = UsersService;
+module.exports = userService;

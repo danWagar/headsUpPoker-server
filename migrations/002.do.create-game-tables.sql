@@ -1,26 +1,26 @@
 
 CREATE TYPE card AS ENUM (
-		"BAD", "2c", "2d", "2h", "2s",
-		"3c", "3d", "3h", "3s",
-		"4c", "4d", "4h", "4s",
-		"5c", "5d", "5h", "5s",
-		"6c", "6d", "6h", "6s",
-		"7c", "7d", "7h", "7s",
-		"8c", "8d", "8h", "8s",
-		"9c", "9d", "9h", "9s",
-		"Tc", "Td", "Th", "Ts",
-		"Jc", "Jd", "Jh", "Js",
-		"Qc", "Qd", "Qh", "Qs",
-		"Kc", "Kd", "Kh", "Ks",
-		"Ac", "Ad", "Ah", "As"
+		'BAD', '2c', '2d', '2h', '2s',
+		'3c', '3d', '3h', '3s',
+		'4c', '4d', '4h', '4s',
+		'5c', '5d', '5h', '5s',
+		'6c', '6d', '6h', '6s',
+		'7c', '7d', '7h', '7s',
+		'8c', '8d', '8h', '8s',
+		'9c', '9d', '9h', '9s',
+		'Tc', 'Td', 'Th', 'Ts',
+		'Jc', 'Jd', 'Jh', 'Js',
+		'Qc', 'Qd', 'Qh', 'Qs',
+		'Kc', 'Kd', 'Kh', 'Ks',
+		'Ac', 'Ad', 'Ah', 'As'
 );
 
 CREATE TYPE bet_type AS ENUM (
-  "check",
-  "call",
-  "raise",
-  "fold"
-)
+  'check',
+  'call',
+  'raise',
+  'fold'
+);
 
 CREATE TABLE game (
   id SERIAL PRIMARY KEY,
@@ -44,11 +44,11 @@ CREATE TABLE hand (
   flop_3 card NOT NULL,
   turn card NOT NULL,
   river card NOT NULL
-)
+);
 
-CREATE TABLE current_bet {
+CREATE TABLE current_bet (
   id SERIAL PRIMARY KEY,
   hand_id INTEGER REFERENCES hand(id) ON DELETE CASCADE NOT NULL,
   player INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   type bet_type NOT NULL
-}
+);
