@@ -23,6 +23,17 @@ function seedUsers(db, users) {
     );
 }
 
+function seedGame(db, player1, player2) {
+  const stackSize = 2000;
+  const newGame = {
+    player1_id: player1.id,
+    player2_id: player2.id,
+    player1_stack: stackSize,
+    player2_stack: stackSize
+  };
+  return db.into('game').insert(newGame);
+}
+
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.user_name,
@@ -64,5 +75,6 @@ module.exports = {
   makeUsersArray,
   cleanTables,
   makeAuthHeader,
-  seedUsers
+  seedUsers,
+  seedGame
 };
