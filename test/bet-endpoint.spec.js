@@ -3,7 +3,7 @@ const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 
-describe.only('Bet Endpoints', function() {
+describe('Bet Endpoints', function() {
   let db;
 
   const testUsers = helpers.makeUsersArray();
@@ -62,16 +62,17 @@ describe.only('Bet Endpoints', function() {
       const player2 = testUsers[1];
       beforeEach('insert users', () => helpers.seedUsers(db, testUsers));
       beforeEach('insert game', () => helpers.seedGame(db, player1, player2));
+      beforeEach('insert hand', () => helpers.seedHand(db));
 
       const newBetBody = {
-        hand_id: 123,
+        hand_id: 1,
         bet_type: 'post',
         current_player: player1.id,
         current_amt: 1,
         last_amt: 2
       };
 
-      it('creates a new bet and responds with bet id', () => {
+      it.only('creates a new bet and responds with bet id', () => {
         return supertest(app)
           .post('/api/bet')
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))

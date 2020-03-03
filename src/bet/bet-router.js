@@ -19,19 +19,19 @@ betRouter.post('/', jsonBodyParser, async (req, res, next) => {
         error: `Missing '${field}' in request body`
       });
   try {
-    const hasBet = await betService.hasBetWithHandId(hand_id);
+    const hasBet = await betService.hasBetWithHandId(req.app.get('db'), hand_id);
 
     if (hasBet)
       return res.status(404).json({
         error: `There is already a bet with this hand id`
       });
 
-    const newBet = await betService.newBet(req.app.get('db'), newBet);
+    const betRes = await betService.newBet(req.app.get('db'), newBet);
 
     res
       .status(201)
-      .location(path.posix.join(req.originalUrl, `/${newBet.id}`))
-      .json({ betID: newBet.id });
+      .location(path.posix.join(req.originalUrl, `/${betRes.id}`))
+      .json({ betID: betRes.id });
     next();
   } catch (error) {
     next(error);

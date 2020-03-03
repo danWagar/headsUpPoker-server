@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
-      users, game
+      users, game, hand
       RESTART IDENTITY CASCADE`
   );
 }
@@ -32,6 +32,23 @@ function seedGame(db, player1, player2) {
     player2_stack: stackSize
   };
   return db.into('game').insert(newGame);
+}
+
+function seedHand(db) {
+  const newHand = {
+    game_id: 1,
+    player1_hand1: '2d',
+    player1_hand2: '2c',
+    player2_hand1: 'Ks',
+    player2_hand2: 'As',
+    flop_1: 'Jh',
+    flop_2: '8d',
+    flop_3: '5s',
+    turn: '3c',
+    river: '5d'
+  };
+
+  return db.into('hand').insert(newHand);
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
@@ -76,5 +93,6 @@ module.exports = {
   cleanTables,
   makeAuthHeader,
   seedUsers,
-  seedGame
+  seedGame,
+  seedHand
 };
