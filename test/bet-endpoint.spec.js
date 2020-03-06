@@ -72,7 +72,7 @@ describe('Bet Endpoints', function() {
         last_amt: 2
       };
 
-      it.only('creates a new bet and responds with bet id', () => {
+      it('creates a new bet and responds with bet id', () => {
         return supertest(app)
           .post('/api/bet')
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))

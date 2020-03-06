@@ -31,7 +31,7 @@ betRouter.post('/', jsonBodyParser, async (req, res, next) => {
     res
       .status(201)
       .location(path.posix.join(req.originalUrl, `/${betRes.id}`))
-      .json({ betID: betRes.id });
+      .json({ id: betRes.id });
     next();
   } catch (error) {
     next(error);

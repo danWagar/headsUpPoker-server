@@ -51,7 +51,7 @@ CREATE TABLE bet (
   id SERIAL PRIMARY KEY,
   hand_id INTEGER REFERENCES hand(id) ON DELETE CASCADE NOT NULL,
   current_player INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  type bet_type NOT NULL,
+  bet_type bet_type NOT NULL,
   current_amt INTEGER NOT NULL,
   last_amt INTEGER NOT NULL
 );

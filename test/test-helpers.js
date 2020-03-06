@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
-      users, game, hand
+      users, game, hand, bet
       RESTART IDENTITY CASCADE`
   );
 }
