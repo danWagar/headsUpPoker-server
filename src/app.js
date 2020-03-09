@@ -8,6 +8,7 @@ const authRouter = require('./auth/auth-router');
 const userRouter = require('./user/user-router');
 const gameRouter = require('./game/game-router');
 const betRouter = require('./bet/bet-router');
+const handRouter = require('./hand/hand-router');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/game', gameRouter);
 app.use('/api/bet', betRouter);
+app.use('/api/hand', handRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

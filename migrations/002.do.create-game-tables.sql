@@ -15,6 +15,19 @@ CREATE TYPE card AS ENUM (
 		'Ac', 'Ad', 'Ah', 'As'
 );
 
+CREATE TYPE hand_rank_type AS ENUM (
+	'INVALID HAND',
+	'HIGH CARD',
+	'PAIR',
+	'TWO PAIR',
+	'SET',
+	'STRAIGHT',
+	'FLUSH',
+	'FULLHOUSE',
+	'QUADS',
+	'STRAIGHT FLUSH'
+);
+
 CREATE TYPE bet_type AS ENUM (
   'post',
   'check',
@@ -36,13 +49,18 @@ CREATE TABLE game (
 CREATE TABLE hand (
   id SERIAL PRIMARY KEY,
   game_id INTEGER REFERENCES game(id) ON DELETE CASCADE NOT NULL,
+  button INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   player1_hand1 card NOT NULL,
   player1_hand2 card NOT NULL,
   player2_hand1 card NOT NULL,
   player2_hand2 card NOT NULL,
-  flop_1 card NOT NULL,
-  flop_2 card NOT NULL,
-  flop_3 card NOT NULL,
+  player1_hand_rank INTEGER NOT NULL, 
+  player2_hand_rank INTEGER NOT NULL, 
+  player1_hand_rank_type hand_rank_type NOT NULL,
+  player2_hand_rank_type hand_rank_type NOT NULL, 
+  flop1 card NOT NULL,
+  flop2 card NOT NULL,
+  flop3 card NOT NULL,
   turn card NOT NULL,
   river card NOT NULL
 );
