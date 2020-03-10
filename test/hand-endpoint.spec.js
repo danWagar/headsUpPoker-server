@@ -23,9 +23,9 @@ describe('Hand Endpoints', function() {
   before('cleanup', () => helpers.cleanTables(db));
 
   afterEach('cleanup', () => helpers.cleanTables(db));
-  
+
   beforeEach('insert users', () => helpers.seedUsers(db, testUsers));
-  
+
   beforeEach('insert game', () => helpers.seedGame(db, player1, player2));
 
   // @input: player1: user(id), player2: user(id), stack_size: integer
@@ -33,7 +33,6 @@ describe('Hand Endpoints', function() {
 
   describe('POST api/hand', () => {
     context('bad new hand request', () => {
-
       const requiredFields = ['game_id', 'button'];
 
       requiredFields.forEach(field => {
@@ -83,7 +82,7 @@ describe('Hand Endpoints', function() {
         river: 'Kh'
       };
 
-      it.only('creates a new bet and responds with hand id', () => {
+      it('creates a new bet and responds with hand id', () => {
         return supertest(app)
           .post('/api/hand')
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
@@ -122,15 +121,17 @@ describe('Hand Endpoints', function() {
 
   describe('GET /api/hand/:id', (req, res, next) => {
     const game_id = 1;
-    const button = player1.id,
+    const button = player1.id;
     const hand = helpers.handFixture(game_id, button);
-    
-    beforeEach('insert hand', () => helpers.seedHand(db, hand));
-    it('returns correct hand given id', () => {
-      return supertest(app).get('/api/hand/1')
-      .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
-      .expect(200, hand);
-    })
+    const expectedHand = { id: 1, ...hand };
 
-  })
+    beforeEach('insert hand', () => helpers.seedHand(db, hand));
+
+    it.only('returns correct hand given id', () => {
+      return supertest(app)
+        .get('/api/hand/1')
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+        .expect(200, expectedHand);
+    });
+  });
 });

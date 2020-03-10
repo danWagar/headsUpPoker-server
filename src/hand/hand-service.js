@@ -1,6 +1,5 @@
 const handService = {
   newHand(db, newHand) {
-    console.log(newHand);
     return db
       .insert(newHand)
       .into('hand')
@@ -8,6 +7,15 @@ const handService = {
       .then(([hand]) => {
         return hand;
       });
+  },
+
+  getHandById(db, id) {
+    console.log(id);
+    return db
+      .select('*')
+      .from('hand')
+      .where('id', id)
+      .first();
   }
 };
 

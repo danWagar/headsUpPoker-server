@@ -45,4 +45,13 @@ handRouter.post('/', jsonBodyParser, (req, res, next) => {
   });
 });
 
+handRouter.get('/:id', (req, res, next) => {
+  handService
+    .getHandById(req.app.get('db'), req.params.id)
+    .then(hand => {
+      res.json(hand);
+    })
+    .catch(next);
+});
+
 module.exports = handRouter;

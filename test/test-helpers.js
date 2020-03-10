@@ -73,26 +73,26 @@ function makeUsersArray() {
       date_created: '2029-01-22T16:28:32.615Z'
     }
   ];
+}
 
-  function handFixture(game_id, button) {
-    return {
-      game_id: game_id,
-      button: player1.id,
-      player1_hand1: '2h',
-      player1_hand2: '2c',
-      player2_hand1: 'As',
-      player2_hand2: 'Ks',
-      player1_hand_rank: 400,
-      player2_hand_rank: 1000,
-      player1_hand_rank_type: 'HIGH CARD',
-      player2_hand_rank_type: 'STRAIGHT FLUSH',
-      flop1: 'Kc',
-      flop2: '2s',
-      flop3: 'Ah',
-      turn: '9d',
-      river: 'Kh'
-    };
-  }
+function handFixture(game_id, buttonId) {
+  return {
+    game_id: game_id,
+    button: buttonId,
+    player1_hand1: '2h',
+    player1_hand2: '2c',
+    player2_hand1: 'As',
+    player2_hand2: 'Ks',
+    player1_hand_rank: 400,
+    player2_hand_rank: 1000,
+    player1_hand_rank_type: 'HIGH CARD',
+    player2_hand_rank_type: 'STRAIGHT FLUSH',
+    flop1: 'Kc',
+    flop2: '2s',
+    flop3: 'Ah',
+    turn: '9d',
+    river: 'Kh'
+  };
 }
 
 module.exports = {
