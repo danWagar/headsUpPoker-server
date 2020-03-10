@@ -34,20 +34,7 @@ function seedGame(db, player1, player2) {
   return db.into('game').insert(newGame);
 }
 
-function seedHand(db) {
-  const newHand = {
-    game_id: 1,
-    player1_hand1: '2d',
-    player1_hand2: '2c',
-    player2_hand1: 'Ks',
-    player2_hand2: 'As',
-    flop_1: 'Jh',
-    flop_2: '8d',
-    flop_3: '5s',
-    turn: '3c',
-    river: '5d'
-  };
-
+function seedHand(db, newHand) {
   return db.into('hand').insert(newHand);
 }
 
@@ -86,6 +73,26 @@ function makeUsersArray() {
       date_created: '2029-01-22T16:28:32.615Z'
     }
   ];
+
+  function handFixture(game_id, button) {
+    return {
+      game_id: game_id,
+      button: player1.id,
+      player1_hand1: '2h',
+      player1_hand2: '2c',
+      player2_hand1: 'As',
+      player2_hand2: 'Ks',
+      player1_hand_rank: 400,
+      player2_hand_rank: 1000,
+      player1_hand_rank_type: 'HIGH CARD',
+      player2_hand_rank_type: 'STRAIGHT FLUSH',
+      flop1: 'Kc',
+      flop2: '2s',
+      flop3: 'Ah',
+      turn: '9d',
+      river: 'Kh'
+    };
+  }
 }
 
 module.exports = {
@@ -94,5 +101,6 @@ module.exports = {
   makeAuthHeader,
   seedUsers,
   seedGame,
-  seedHand
+  seedHand,
+  handFixture
 };

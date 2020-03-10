@@ -7,6 +7,8 @@ describe('Hand Endpoints', function() {
   let db;
 
   const testUsers = helpers.makeUsersArray();
+  const player1 = testUsers[0];
+  const player2 = testUsers[1];
 
   before('make knex instance', () => {
     db = knex({
@@ -21,16 +23,16 @@ describe('Hand Endpoints', function() {
   before('cleanup', () => helpers.cleanTables(db));
 
   afterEach('cleanup', () => helpers.cleanTables(db));
+  
+  beforeEach('insert users', () => helpers.seedUsers(db, testUsers));
+  
+  beforeEach('insert game', () => helpers.seedGame(db, player1, player2));
 
   // @input: player1: user(id), player2: user(id), stack_size: integer
   // @output: game(id)
 
   describe('POST api/hand', () => {
     context('bad new hand request', () => {
-      const player1 = testUsers[0];
-      const player2 = testUsers[1];
-      beforeEach('insert users', () => helpers.seedUsers(db, testUsers));
-      beforeEach('insert game', () => helpers.seedGame(db, player1, player2));
 
       const requiredFields = ['game_id', 'button'];
 
@@ -57,8 +59,6 @@ describe('Hand Endpoints', function() {
     context(`happy path for hand endpoint`, () => {
       const player1 = testUsers[0];
       const player2 = testUsers[1];
-      beforeEach('insert users', () => helpers.seedUsers(db, testUsers));
-      beforeEach('insert game', () => helpers.seedGame(db, player1, player2));
 
       const newHandBody = {
         game_id: 1,
@@ -119,4 +119,18 @@ describe('Hand Endpoints', function() {
       });
     });
   });
+
+  describe('GET /api/hand/:id', (req, res, next) => {
+    const game_id = 1;
+    const button = player1.id,
+    const hand = helpers.handFixture(game_id, button);
+    
+    beforeEach('insert hand', () => helpers.seedHand(db, hand));
+    it('returns correct hand given id', () => {
+      return supertest(app).get('/api/hand/1')
+      .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+      .expect(200, hand);
+    })
+
+  })
 });
